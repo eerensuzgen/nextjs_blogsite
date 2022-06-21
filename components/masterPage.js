@@ -1,4 +1,4 @@
-import Navigation from "./navigation";
+import Navigation from "./Navigation";
 import Head from "next/head";
 
 function Layout({ children }) {
