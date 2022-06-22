@@ -2,9 +2,11 @@ import Layout from "../components/masterPage";
 
 function About() {
   return (
-    <Layout>
-      <h1>About</h1>
-    </Layout>
+    <div className="bg-gray-100">
+      <Layout>
+        <h1>About</h1>
+      </Layout>
+    </div>
   );
 }
 
