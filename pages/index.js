@@ -1,7 +1,17 @@
 import Layout from "../components/masterPage";
-import Blog from "../components/blogs";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React from "react";
+
+export const Post = () => {
+  const router = useRouter();
+  const { pid } = router.query;
+
+  return <p>Post: {pid}</p>;
+};
+
 //https://nextjs-blogsite-woad.vercel.app/
-function HomePage() {
+function HomePage({ posts }) {
   return (
     <div className="bg-gray-100">
       <Layout className="flex-grow">
@@ -129,15 +139,45 @@ function HomePage() {
 
         <div>
           <h1 className="text-highlight text-4xl font-bold text-center ">
-            Yazılarım
+            Doodles
           </h1>
         </div>
-        <Blog />
+        {/* <Blog /> */}
+        <div id="zaa">
+          {posts.map((post) => (
+            <div className="pt-8 ">
+              <Link
+                href={{
+                  pathname: "/[postId]",
+                  query: { postId: post.slug },
+                }}
+              >
+                <a className="hover:underline">
+                  <article className="pt-3 pl-3 bg-slate-400 rounded-lg shadow-slate-900 shadow-lg">
+                    <h2 className="font-semibold">{post.title}</h2>
+                    <div className="">{post.details}</div>
+                    <div className="mt-1 flex items-center space-x-2 text-zinc-500">
+                      <span>{post.date}</span>
+                    </div>
+                  </article>
+                </a>
+              </Link>
+            </div>
+          ))}
+        </div>
+
         {/* <style jsx>{``}</style>
         <style global jsx>{``}</style> */}
       </Layout>
     </div>
   );
 }
+
+HomePage.getInitialProps = async () => {
+  // TODO: aşağıdaki satırda bulunan adresi kendi sunucu adresinle değiştirmelisin
+  const res = await fetch("http://localhost:3000/api/posts");
+  const json = await res.json();
+  return { posts: json.posts };
+};
 
 export default HomePage;
