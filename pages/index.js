@@ -143,9 +143,9 @@ function HomePage({ posts }) {
           </h1>
         </div>
         {/* <Blog /> */}
-        <div id="zaa">
+        <div>
           {posts.map((post) => (
-            <div className="pt-8 ">
+            <div className="pt-8 " key={post.slug}>
               <Link
                 href={{
                   pathname: "/[postId]",
